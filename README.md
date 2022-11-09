@@ -1,5 +1,5 @@
 # Major Components
-## DB - Database
+## Database
 There needs to be a source of truth to record and verify vacation related requests, in pair with the api - all levels of users will indirectly interact with the database to update and view vacation time, sick leave, and personal time off.
 ## Server
 Database transactions are sensitive and need also to be web connective. Using an API as the middleman between the database and any frontend allows for flexability in our frontend (can be anything that can send a request) and sanitizes the database transactions from possible malcious attacks. Business logic also will live in the api and reject requests that do not fit company policy or the local facility’s leave policies. 
@@ -58,8 +58,70 @@ How this information is stored would greately change the approach to retrieving 
 
 # Lower level architecture
 ## UML Class Diagrams
+```mermaid
+classDiagram
+class Reporter {
+    - logger : Logger
+    + debug(msg : str)
+    + info(msg : str)
+    + warning(msg : str, exc: Exception)
+    + error(msg : str, exc: Exception)
+}
+class BaseRepository {
+    - db_connection : Engine 
+    + execute_query(sql : str)
+}
+class User{
+    + user_id : str
+    + role : enum
+    + first_name : str
+    + last_name : str
+    + personal_leave_time : int
+    + SSO_info : if applicable
+}
+class VacationRequest{
+    + start_date : datetime
+    + end_date : datetime
+    + user_id : str
+    + status : enum
+    + submission_date : datetime
+}
+class Status{
+    <<Enumuration>>
+    auto_denied
+    pending
+    approved
+    denied 
+}
+class UserRepo{
+    + /create_user(new user: User) : User
+    + /get_user(search user: User) : User
+    + /update_user(new user: User) : User
+}
+class VacationRequestRepo{
+    + create_vacation_request(new vacation_request: VacationRequest) : VacationRequest
+    + get_vacation_request(search vacation_request: VacationRequest) : VacationRequest
+    + update_vacation_request(new vacation_request: VacationRequester) : VacationRequest
+}
+class Routes{
+    + create_user(User)
+    + get_user(User)
+    + update_user(User)
+    + create_vacation_request(VacationRequest)
+    + get_vacation_request(VacationRequest)
+    + update_vacation_request(VacationRequester)
+}
+UserRepo ..> Routes
+VacationRequestRepo ..> Routes
+BaseRepository o-- UserRepo
+BaseRepository o-- VacationRequestRepo
+BaseModel o-- User
+BaseModel o-- VacationRequest
+VacationRequest o-- Status
+```
 ## UML Activity Diagrams
-## UML Message Sequence Diagrams
+
+## UML Message Sequence Diagrams  
 ```mermaid
 sequenceDiagram
 DB->>API: Return rows or rows changed
@@ -90,5 +152,32 @@ user->>UI: Log In
 UI->>user: Display Information
 ```
 ## UML Statechart Diagrams
+```mermaid
+stateDiagram-v2
+* : Any state can be overridden to transition to another unnaturally
+[*] --> Pending
+[*] --> AutoDenied : Violates business rules
+AutoDenied --> Pending : HR override
+Pending --> Denied : Manager deny
+Pending --> Approved : Manager approval
+```
 ## Database Design
+```mermaid
+classDiagram
+class User{
+    + user_id : VARCHAR
+    + role : VARCHAR
+    + first_name : VARCHAR
+    + last_name : VARCHAR
+    + personal_leave_time : int
+    + SSO_info : if applicable
+}
+class VacationRequest{
+    + start_date : TIMESTAMP
+    + end_date : TIMESTAMP
+    + user_id : VARCHAR
+    + status : VARCHAR
+    + submission_date : TIMESTAMP
+}
+```
 ## User Interface Design
