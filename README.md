@@ -120,6 +120,7 @@ BaseModel o-- VacationRequest
 VacationRequest o-- Status
 ```
 ## UML Activity Diagrams
+![image](https://user-images.githubusercontent.com/10381354/205495640-b97e8d05-e4a4-47f9-be56-ccef3fa9d1f5.png)
 
 ## UML Message Sequence Diagrams  
 ```mermaid
@@ -181,3 +182,12 @@ class VacationRequest{
 }
 ```
 ## User Interface Design
+![image](https://user-images.githubusercontent.com/10381354/205494152-0d29ce9a-2ac8-46f7-95d4-475701b6172b.png)
+![output pdf-1](https://user-images.githubusercontent.com/10381354/205494163-35f1ea64-1db3-4957-a865-c66209fa67d0.jpg)
+![output pdf-2](https://user-images.githubusercontent.com/10381354/205494165-8c4585ee-7e1d-4e8e-98a9-5936534b294a.jpg)
+![output pdf-3](https://user-images.githubusercontent.com/10381354/205494166-a3bbe33a-2e4c-4fea-849f-044a94095570.jpg)
+![output pdf-4](https://user-images.githubusercontent.com/10381354/205494167-aba63d82-56be-45c9-a7c8-68cf305e74b7.jpg)
+![output pdf-5](https://user-images.githubusercontent.com/10381354/205494168-307b002b-b4ad-43b3-969c-3bc6d77879ef.jpg)
+![output pdf-6](https://user-images.githubusercontent.com/10381354/205494169-74281810-da68-4692-9cbd-b8775a75555c.jpg)
+
+
